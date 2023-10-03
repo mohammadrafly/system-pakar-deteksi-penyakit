@@ -23,7 +23,7 @@
                 <tr class="border-b border-gray-200 hover:bg-gray-100">
                     <td class="py-3 px-6 text-center"><?= $no++ ?></td>
                     <td class="py-3 px-6 text-center"><?= $data['namapenyakit'] ?></td>
-                    <td class="py-3 px-6 text-center"><?= $data['gejala'] ?></td>
+                    <td class="py-3 px-6 text-center"><?= $data['nama_gejala'] ?></td>
                     <td class="py-3 px-6 text-center"><?= $data['nilaibobot'] ?></td>
                     <td class="py-3 px-6 text-center">
                         <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-md mr-2" onclick="update(<?= $data['id'] ?>)">Edit</button>

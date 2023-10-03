@@ -43,4 +43,16 @@ class BasisPengetahuan extends Model
     protected $afterFind      = [];
     protected $beforeDelete   = [];
     protected $afterDelete    = [];
+
+    function findAllAssociated() 
+    {
+        return $this->db->table('basispengetahuan')
+            ->select('
+                basispengetahuan.*,
+                gejala.gejala as nama_gejala
+            ')
+            ->join('gejala', 'basispengetahuan.gejala = gejala.id')
+            ->get()
+            ->getResultArray();
+    }
 }

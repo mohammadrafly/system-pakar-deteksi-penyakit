@@ -17,8 +17,9 @@ class BasisPengetahuan extends BaseController
         
         if ($this->request->getMethod(true) !== 'POST') {
             return view('Pages/basisPengetahuan', [
+            //dd([    
                 'title' => 'Data Gejala',
-                'content' => $model->findAll(),
+                'content' => $model->findAllAssociated(),
                 'gejala' => $gejala->findAll(),
                 'penyakit' => $penyakit->findAll()
             ]);
@@ -51,7 +52,7 @@ class BasisPengetahuan extends BaseController
     {
         $model = new ModelBP();
         
-        if (substr($id, 0, 1) === 'P0') {
+        if (preg_match('/^P\d+/', $id)) {
             $query = $model->table('basispengetahuan')
                 ->select('
                     j.jenistanaman as nama_tanaman,
