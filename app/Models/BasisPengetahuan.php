@@ -55,4 +55,47 @@ class BasisPengetahuan extends Model
             ->get()
             ->getResultArray();
     }
+
+    function findAllAssociatedByID($id) 
+    {
+        return $this->db->table('basispengetahuan')
+            ->select('
+                basispengetahuan.*,
+                gejala.gejala as nama_gejala
+            ')
+            ->join('gejala', 'basispengetahuan.gejala = gejala.id')
+            ->where('basispengetahuan.id', $id)
+            ->get()
+            ->getResultArray();
+    }
+
+    public function getPengetahuanByCode($id)
+    {
+        return $this->db->table('basispengetahuan')
+            ->select('
+                j.jenistanaman as nama_tanaman,
+                p.*,
+                gejala.*
+            ')
+            ->join('penyakit as p', 'p.namapenyakit = basispengetahuan.namapenyakit')
+            ->join('jenistanaman as j', 'p.jenistanaman = j.id')
+            ->join('gejala', 'basispengetahuan.gejala = gejala.id')
+            ->where('p.kodepenyakit', $id)
+            ->get();
+    }
+
+    public function getPengetahuanByName($id)
+    {
+        return $this->db->table('basispengetahuan')
+            ->select('
+                j.jenistanaman as nama_tanaman,
+                p.*,
+                gejala.*
+            ')
+            ->join('penyakit as p', 'p.namapenyakit = basispengetahuan.namapenyakit')
+            ->join('jenistanaman as j', 'p.jenistanaman = j.id')
+            ->join('gejala', 'basispengetahuan.gejala = gejala.id')
+            ->where('p.namapenyakit', $id)
+            ->get();
+    }
 }

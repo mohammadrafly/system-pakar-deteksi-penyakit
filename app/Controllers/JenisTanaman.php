@@ -44,29 +44,22 @@ class JenisTanaman extends BaseController
         $model = new ModelJT();
 
         if ($this->request->getMethod(true) !== 'POST') {
-            return $this->response->setJSON($model->find($id));
+            return view('Pages/update/jenistanaman', [
+                //dd([
+                    'title' => 'Update Data',
+                    'content' => $model->find($id)
+                ]);
         }
 
         $data = [
-            'jenistanaman' => $this->request->getVar('jenisTanaman'),
+            'jenistanaman' => $this->request->getVar('jenistanaman'),
             'updated_at' => date('Y-m-d H:i:s')
         ];
 
-        if (!$model->where('id', $id)->replace($data)) {
-            return $this->response->setJSON([
-                'status' => false,
-                'icon' => 'error',
-                'title' => 'Error!',
-                'text' => 'Gagal update data',
-            ]);
+        if (!$model->update($id, $data)) {
+            return redirect()->to(base_url('admin/jenis-tanaman'))->with('error', 'Gagal melakukan update');
         }
-
-        return $this->response->setJSON([
-            'status' => true,
-            'icon' => 'success',
-            'title' => 'Success!',
-            'text' => 'Berhasil melakukan update',
-        ]);
+        return redirect()->to(base_url('admin/jenis-tanaman'))->with('success', 'Berhasil melakukan update');
     }
 
     public function delete($id)

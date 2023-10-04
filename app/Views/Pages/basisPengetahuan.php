@@ -26,8 +26,8 @@
                     <td class="py-3 px-6 text-center"><?= $data['nama_gejala'] ?></td>
                     <td class="py-3 px-6 text-center"><?= $data['nilaibobot'] ?></td>
                     <td class="py-3 px-6 text-center">
-                        <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-md mr-2" onclick="update(<?= $data['id'] ?>)">Edit</button>
-                        <button class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-md" onclick="deleteData(<?= $data['id'] ?>)">Delete</button>
+                        <a href="<?= base_url('admin/basis-pengetahuan/update/'.$data['id']) ?>" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-md mr-2">Edit</a>
+                        <button class="mt-2 bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-md" onclick="deleteData(<?= $data['id'] ?>)">Delete</button>
                     </td>
                 </tr>
                 <?php endforeach ?>
@@ -135,40 +135,6 @@
             Swal.fire('Changes are not saved', '', 'info')
             }
         })
-    }
-
-    
-    function update(id) {
-        save_method = 'update';
-        $('#dataForm')[0].reset(); 
-        $.ajax({
-            url : `${base_url}admin/basis-pengetahuan/update/${id}`,
-            type: 'GET',
-            dataType: 'JSON',
-            success: function(respond)
-            {
-                console.log(respond)
-                $('[name="namaPenyakit"]').val(respond.namaPenyakit);
-                $('[name="nilaibobot"]').val(respond.nilaibobot);
-                $('[name="gejala"]').val(respond.gejala);
-                $('#myModal').modal('show');
-                $('.modal-title').text('Edit Data'); 
-
-                $('#password-input').hide();
-                $('#username-input').hide();
-                $('#email-input').hide();
-
-                // Add event listener to modal close event
-                $('#myModal').on('hidden.bs.modal', function () {
-                    $('#dataForm')[0].reset(); // Reset the form
-                    location.reload();
-                });
-            },
-            error: function (textStatus)
-            {
-                alert(textStatus);
-            }
-        });
     }
 </script>
 

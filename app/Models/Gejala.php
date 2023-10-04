@@ -56,4 +56,17 @@ class Gejala extends Model
             ->get()
             ->getResultArray();
     }
+
+    function findAllAssociatedByID($id) 
+    {
+        return $this->db->table('gejala')
+            ->select('
+                gejala.*,
+                jenistanaman.jenistanaman as nama_tanaman
+            ')
+            ->join('jenistanaman', 'gejala.jenistanaman = jenistanaman.id')
+            ->where('gejala.id', $id)
+            ->get()
+            ->getResultArray();
+    }
 }

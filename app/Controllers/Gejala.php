@@ -66,33 +66,29 @@ class Gejala extends BaseController
     public function update($id)
     {
         $model = new ModelGejala();
+        $tanaman = new JenisTanaman();
 
         if ($this->request->getMethod(true) !== 'POST') {
-            return $this->response->setJSON($model->find($id));
+            return view('Pages/update/gejala', [
+            //dd([
+                'title' => 'Update Data',
+                'content' => $model->findAllAssociatedByID($id),
+                'jenis' => $tanaman->findAll(),
+            ]);
         }
 
         $data = [
+            'kodegejala' => $this->request->getVar('kodegejala'),
             'jenistanaman' => $this->request->getVar('jenistanaman'),
             'gejala' => $this->request->getVar('gejala'),
             'daerah' => $this->request->getVar('daerah'),
             'updated_at' => date('Y-m-d H:i:s')
         ];
 
-        if (!$model->where('id', $id)->replace($data)) {
-            return $this->response->setJSON([
-                'status' => false,
-                'icon' => 'error',
-                'title' => 'Error!',
-                'text' => 'Gagal melakukan update',
-            ]);
+        if (!$model->update($id, $data)) {
+            return redirect()->to(base_url('admin/gejala'))->with('error', 'Gagal melakukan update');
         }
-
-        return $this->response->setJSON([
-            'status' => true,
-            'icon' => 'success',
-            'title' => 'Success!',
-            'text' => 'Berhasil melakukan update',
-        ]);
+        return redirect()->to(base_url('admin/gejala'))->with('success', 'Berhasil melakukan update');
     }
 
     public function delete($id)

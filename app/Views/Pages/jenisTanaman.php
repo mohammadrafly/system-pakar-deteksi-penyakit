@@ -6,6 +6,16 @@
         <div class="data-range-dropdown mt-2 flex justify-between items-center">
             <button id="openModal" class="px-4 py-2 bg-blue-500 hover:bg-blue-700 text-white font-semibold rounded-md">Tambah Data</button>
         </div>
+        <?php if (!empty(session()->getFlashdata('error'))) : ?>
+            <div class="flash-message text-center font-thin p-2 inline-block bg-red-700 text-white rounded-lg">
+                <?php echo session()->getFlashdata('error'); ?>
+            </div>
+        <?php endif; ?>
+        <?php if (!empty(session()->getFlashdata('success'))) : ?>
+            <div class="flash-message text-center font-thin p-2 inline-block bg-green-700 text-white rounded-lg">
+                <?php echo session()->getFlashdata('success'); ?>
+            </div>
+        <?php endif; ?>
         <table class="min-w-full bg-white shadow-md rounded-lg overflow-hidden mt-5">
             <thead class="bg-gray-100 text-gray-600 uppercase text-sm leading-normal">
                 <tr>
@@ -22,7 +32,7 @@
                     <td class="py-3 px-6 text-center"><?= $no++?></td>
                     <td class="py-3 px-6 text-center"><?= $data['jenistanaman'] ?></td>
                     <td class="py-3 px-6 text-center">
-                        <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-md mr-2" onclick="update(<?= $data['id'] ?>)">Edit</button>
+                        <a href="<?= base_url('admin/jenis-tanaman/update/'.$data['id']) ?>" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-md mr-2">Edit</a>
                         <button class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-md" onclick="deleteData(<?= $data['id'] ?>)">Delete</button>
                     </td>
                 </tr>
@@ -112,38 +122,6 @@
             Swal.fire('Changes are not saved', '', 'info')
             }
         })
-    }
-
-    
-    function update(id) {
-        save_method = 'update';
-        $('#dataForm')[0].reset(); 
-        $.ajax({
-            url : `${base_url}admin/jenis-tanaman/update/${id}`,
-            type: 'GET',
-            dataType: 'JSON',
-            success: function(respond)
-            {
-                console.log(respond)
-                $('[name="jenisTanaman"]').val(respond.jenistanaman);
-                $('#myModal').modal('show');
-                $('.modal-title').text('Edit Data'); 
-
-                $('#password-input').hide();
-                $('#username-input').hide();
-                $('#email-input').hide();
-
-                // Add event listener to modal close event
-                $('#myModal').on('hidden.bs.modal', function () {
-                    $('#dataForm')[0].reset(); // Reset the form
-                    location.reload();
-                });
-            },
-            error: function (textStatus)
-            {
-                alert(textStatus);
-            }
-        });
     }
 </script>
 

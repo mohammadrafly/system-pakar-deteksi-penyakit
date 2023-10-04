@@ -26,6 +26,20 @@ document.addEventListener('DOMContentLoaded', function () {
     closeModalButton.addEventListener('click', closeModal);
 });
 
+// Function to hide flash messages after 3 seconds with a fade animation
+function hideFlashMessages() {
+    const flashMessages = document.querySelectorAll('.flash-message');
+        
+    flashMessages.forEach(message => {
+        setTimeout(() => {
+            message.style.opacity = '0';
+            setTimeout(() => {
+                message.style.display = 'none';
+            }, 500); // Fade out duration (0.5 seconds)
+        }, 3000); // Message display duration (3 seconds)
+    });
+}
+
 
 document.addEventListener('DOMContentLoaded', function () {
     const tableBody = document.querySelector('tbody');

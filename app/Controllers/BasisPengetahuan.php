@@ -53,34 +53,15 @@ class BasisPengetahuan extends BaseController
         $model = new ModelBP();
         
         if (preg_match('/^P\d+/', $id)) {
-            $query = $model->table('basispengetahuan')
-                ->select('
-                    j.jenistanaman as nama_tanaman,
-                    p.*,
-                    gejala.*
-                ')
-                ->join('penyakit as p', 'p.namapenyakit = basispengetahuan.namapenyakit')
-                ->join('jenistanaman as j', 'p.jenistanaman = j.id')
-                ->join('gejala', 'basispengetahuan.gejala = gejala.id')
-                ->where('p.kodepenyakit', $id)
-                ->get();
+            $query = $model->getPengetahuanByCode($id);
         } else {
-            $query = $model->table('basispengetahuan')
-                ->select('
-                    j.jenistanaman as nama_tanaman,
-                    p.*,
-                    gejala.*
-                ')
-                ->join('penyakit as p', 'p.namapenyakit = basispengetahuan.namapenyakit')
-                ->join('jenistanaman as j', 'p.jenistanaman = j.id')
-                ->join('gejala', 'basispengetahuan.gejala = gejala.id')
-                ->where('p.namapenyakit', $id)
-                ->get();
+            $query = $model->getPengetahuanByName($id);
         }
     
         $result = $query->getResult();
     
         return view('Pages/basisPengetahuanSingleData', [
+        //dd([
             'title' => 'Detail Penyakit',
             'content' => $result
         ]);
@@ -89,9 +70,17 @@ class BasisPengetahuan extends BaseController
     public function update($id)
     {
         $model = new ModelBP();
+        $gejala = new Gejala();
+        $penyakit = new Penyakit();
 
         if ($this->request->getMethod(true) !== 'POST') {
-            return $this->response->setJSON($model->find($id));
+            return view('Pages/update/basispengetahuan', [
+            //dd([
+                'title' => 'Update Data',
+                'content' => $model->findAllAssociatedByID($id),
+                'penyakit' => $penyakit->findAll(),
+                'gejala' => $gejala->findAll(),
+            ]);
         }
 
         $data = [
@@ -101,21 +90,10 @@ class BasisPengetahuan extends BaseController
             'updated_at' => date('Y-m-d H:i:s')
         ];
 
-        if (!$model->where('id', $id)->replace($data)) {
-            return $this->response->setJSON([
-                'status' => false,
-                'icon' => 'error',
-                'title' => 'Error!',
-                'text' => 'Gagal melakukan update',
-            ]);
+        if (!$model->update($id, $data)) {
+            return redirect()->to(base_url('admin/basis-pengetahuan'))->with('error', 'Gagal melakukan update');
         }
-
-        return $this->response->setJSON([
-            'status' => true,
-            'icon' => 'success',
-            'title' => 'Success!',
-            'text' => 'Berhasil melakukan update',
-        ]);
+        return redirect()->to(base_url('admin/basis-pengetahuan'))->with('success', 'Berhasil melakukan update');
     }
 
     public function delete($id)

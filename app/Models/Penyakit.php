@@ -72,4 +72,17 @@ class Penyakit extends Model
             ->get()
             ->getResultArray();
     }
+
+    function findAllAssociatedByIDs($id) 
+    {
+        return $this->db->table('penyakit')
+            ->select('
+                penyakit.*,
+                jenistanaman.jenistanaman as nama_tanaman
+            ')
+            ->join('jenistanaman', 'penyakit.jenistanaman = jenistanaman.id')
+            ->where('penyakit.id', $id)
+            ->get()
+            ->getResultArray();
+    }
 }
