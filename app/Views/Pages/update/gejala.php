@@ -4,7 +4,10 @@
 
 <div class="max-w-screen-md mx-auto mt-10">
     <form method="post" action="<?= base_url('admin/gejala/update/' . $content[0]['id']) ?>" class="space-y-4">
-        <input type="text" hidden id="kodegejala" name="kodegejala" value="<?= $content[0]['kodegejala'] ?>">
+        <div class="mb-4">
+            <label for="kodegejala" class="block text-gray-700 text-sm font-bold mb-2">Kode Gejala (gunakan format : GXXX/G123 )</label>
+            <input type="text" id="kodegejala" name="kodegejala" value="<?= $content[0]['kodegejala'] ?>" class="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring focus:border-blue-500" placeholder="Enter Kode Gejala">
+        </div>
         <div class="mb-4">
             <label for="jenistanaman" class="block text-gray-700 text-sm font-bold mb-2">Jenis Tanaman</label>
             <select id="jenistanaman" name="jenistanaman" class="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring focus:border-blue-500">

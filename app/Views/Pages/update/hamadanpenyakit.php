@@ -4,7 +4,10 @@
 
 <div class="max-w-screen-md mx-auto mt-10">
     <form method="post" action="<?= base_url('admin/hama-dan-penyakit/update/' . $content[0]['id']) ?>" class="space-y-4">
-        <input type="text" hidden id="kodepenyakit" name="kodepenyakit" value="<?= $content[0]['kodepenyakit'] ?>">
+        <div class="mb-4">
+            <label for="kodePenyakit" class="block text-gray-700 text-sm font-bold mb-2">Kode Penyakit (gunakan format : PXXX/P123 )</label>
+            <input type="text" id="kodePenyakit" name="kodePenyakit" class="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring focus:border-blue-500" value="<?= $content[0]['kodepenyakit'] ?>" placeholder="Enter Kode Penyakit">
+        </div>
         
         <div class="mb-4">
             <label class="block text-gray-700 text-sm font-bold mb-2" for="namaPenyakit">Nama Penyakit</label>

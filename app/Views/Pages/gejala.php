@@ -58,6 +58,10 @@
                 <h2 class="text-xl font-semibold mb-4">Tambah Data</h2>
                 <form id="dataForm" class="space-y-4">
                     <div class="mb-4">
+                        <label for="kodegejala" class="block text-gray-700 text-sm font-bold mb-2">Kode Gejala (gunakan format : GXXX/G123 )</label>
+                        <input type="text" id="kodegejala" name="kodegejala" class="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring focus:border-blue-500" placeholder="Enter Kode Gejala">
+                    </div>
+                    <div class="mb-4">
                         <label for="jenisTanaman" class="block text-gray-700 text-sm font-bold mb-2">Jenis Tanaman</label>
                         <select id="jenisTanaman" name="jenisTanaman" class="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring focus:border-blue-500">
                             <option>Select Jenis Tanaman</option>

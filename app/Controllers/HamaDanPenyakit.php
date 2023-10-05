@@ -40,7 +40,7 @@ class HamaDanPenyakit extends BaseController
         }
 
         $data = [
-            'kodepenyakit' => $this->generateKodePenyakit(),
+            'kodepenyakit' => $this->request->getVar('kodePenyakit'),
             'namapenyakit' => $this->request->getVar('namaPenyakit'),
             'jenistanaman' => $this->request->getVar('jenisTanaman'),
             'fisikmekanis' => $this->request->getVar('fisikMekanis'),
@@ -81,6 +81,7 @@ class HamaDanPenyakit extends BaseController
         }
 
         $data = [
+            'kodepenyakit' => $this->request->getVar('kodePenyakit'),
             'namapenyakit' => $this->request->getVar('namaPenyakit'),
             'fisikmekanis' => $this->request->getVar('fisikMekanis'),
             'jenistanaman' => $this->request->getVar('jenistanaman'),

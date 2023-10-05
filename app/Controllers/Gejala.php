@@ -40,7 +40,7 @@ class Gejala extends BaseController
         }
 
         $data = [
-            'kodegejala' => $this->generateKodeGejala(),
+            'kodegejala' => $this->request->getVar('kodegejala'),
             'jenistanaman' => $this->request->getVar('jenisTanaman'),
             'gejala' => $this->request->getVar('gejala'),
             'daerah' => $this->request->getVar('daerah'),

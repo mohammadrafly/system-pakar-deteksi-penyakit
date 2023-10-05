@@ -54,6 +54,12 @@
             <div class="modal-content py-4 text-left px-6">
                 <h2 class="text-xl font-semibold mb-4">Tambah Data</h2>
                 <form id="dataForm" class="space-y-4">
+
+                    <div class="mb-4">
+                        <label for="kodePenyakit" class="block text-gray-700 text-sm font-bold mb-2">Kode Penyakit  (gunakan format : PXXX/P123 )</label>
+                        <input type="text" id="kodePenyakit" name="kodePenyakit" class="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring focus:border-blue-500" placeholder="Enter Kode Penyakit">
+                    </div>
+
                     <div class="mb-4">
                         <label for="namaPenyakit" class="block text-gray-700 text-sm font-bold mb-2">Nama Penyakit</label>
                         <input type="text" id="namaPenyakit" name="namaPenyakit" class="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring focus:border-blue-500" placeholder="Enter Nama Penyakit">
