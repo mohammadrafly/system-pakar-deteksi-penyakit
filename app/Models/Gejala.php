@@ -53,9 +53,11 @@ class Gejala extends Model
                 jenistanaman.jenistanaman as nama_tanaman
             ')
             ->join('jenistanaman', 'gejala.jenistanaman = jenistanaman.id')
+            ->orderBy('gejala.kodegejala', 'ASC')
             ->get()
             ->getResultArray();
     }
+    
 
     function findAllAssociatedByID($id) 
     {

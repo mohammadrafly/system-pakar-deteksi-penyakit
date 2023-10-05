@@ -11,7 +11,7 @@
         <div class="mb-4">
             <label for="jenistanaman" class="block text-gray-700 text-sm font-bold mb-2">Jenis Tanaman</label>
             <select id="jenistanaman" name="jenistanaman" class="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring focus:border-blue-500">
-                <option selected value="<?= $content[0]['id'] ?>"><?= $content[0]['nama_tanaman'] ?></option>
+                <option selected value="<?= $content[0]['jenistanaman'] ?>"><?= $content[0]['nama_tanaman'] ?></option>
                 <?php foreach($jenis as $data): ?>
                 <option value="<?= $data['id'] ?>"><?= $data['jenistanaman'] ?></option>
                 <?php endforeach ?>

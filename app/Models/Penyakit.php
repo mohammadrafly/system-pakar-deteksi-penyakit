@@ -56,6 +56,7 @@ class Penyakit extends Model
                 jenistanaman.jenistanaman as nama_tanaman
             ')
             ->join('jenistanaman', 'penyakit.jenistanaman = jenistanaman.id')
+            ->orderBy('penyakit.kodepenyakit', 'ASC')
             ->get()
             ->getResultArray();
     }
