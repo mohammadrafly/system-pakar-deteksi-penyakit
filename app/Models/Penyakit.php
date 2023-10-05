@@ -85,4 +85,34 @@ class Penyakit extends Model
             ->get()
             ->getResultArray();
     }
+
+    public function getPenyakitByCode($id)
+    {
+        return $this->db->table('penyakit as p')
+            ->select('
+                j.jenistanaman as nama_tanaman,
+                p.*,
+                gejala.*
+            ')
+            ->join('basispengetahuan', 'p.namapenyakit = basispengetahuan.namapenyakit', 'left')
+            ->join('jenistanaman as j', 'p.jenistanaman = j.id', 'left')
+            ->join('gejala', 'basispengetahuan.gejala = gejala.id', 'left')
+            ->where('p.kodepenyakit', $id)
+            ->get();
+    }
+
+    public function getPenyakitByName($id)
+    {
+        return $this->db->table('penyakit as p')
+            ->select('
+                j.jenistanaman as nama_tanaman,
+                p.*,
+                gejala.*
+            ')
+            ->join('basispengetahuan', 'p.namapenyakit = basispengetahuan.namapenyakit', 'left')
+            ->join('jenistanaman as j', 'p.jenistanaman = j.id', 'left')
+            ->join('gejala', 'basispengetahuan.gejala = gejala.id', 'left')
+            ->where('p.namapenyakit', $id)
+            ->get();
+    }
 }

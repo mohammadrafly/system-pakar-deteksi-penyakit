@@ -50,12 +50,12 @@ class BasisPengetahuan extends BaseController
 
     public function singleData($id) 
     {
-        $model = new ModelBP();
+        $model = new Penyakit();
         
         if (preg_match('/^P\d+/', $id)) {
-            $query = $model->getPengetahuanByCode($id);
+            $query = $model->getPenyakitByCode($id);
         } else {
-            $query = $model->getPengetahuanByName($id);
+            $query = $model->getPenyakitByName($id);
         }
     
         $result = $query->getResult();
@@ -65,7 +65,7 @@ class BasisPengetahuan extends BaseController
             'title' => 'Detail Penyakit',
             'content' => $result
         ]);
-    }    
+    }
 
     public function update($id)
     {
