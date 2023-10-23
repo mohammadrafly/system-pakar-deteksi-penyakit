@@ -98,4 +98,16 @@ class BasisPengetahuan extends Model
             ->where('p.namapenyakit', $id)
             ->get();
     }
+
+    public function getSymptomDetailsByID($id)
+    {
+       return $this->db->table('basispengetahuan')
+            ->select('
+                basispengetahuan.*,
+                gejala.*
+            ')
+            ->join('gejala', 'basispengetahuan.gejala = gejala.id')
+            ->where('basispengetahuan.gejala', $id)
+            ->get()->getResultArray();
+    }
 }

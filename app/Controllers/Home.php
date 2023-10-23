@@ -43,10 +43,14 @@ class Home extends BaseController
         }
     
         $selectedSymptoms = $this->request->getVar('selected_gejalas[]');
+
+        if (empty($selectedSymptoms)) {
+            return redirect()->to('diagnosa-penyakit')->with('error', 'Maaf, Anda harus memilih setidaknya satu gejala.');
+        }        
+
         $diseasesProbability = $this->calculateEuclideanProbability($selectedSymptoms);
     
         return view('Pages/diagnosaPenyakit', [
-        //dd([
             'title' => 'Diagnosa Penyakit',
             'content' => $model->findAll(),
             'diseasesProbability' => $diseasesProbability,
@@ -56,42 +60,40 @@ class Home extends BaseController
     private function calculateEuclideanProbability($selectedSymptoms)
     {
         $model = new ModelBP();
-        $nilaiBobotArray = [];
 
-        foreach ($selectedSymptoms as $data) {
-            $result = $model->where('gejala', $data)->first();
-            if ($result) {
-                $nilaiBobotArray[] = $result;
-            }
-        }
+        $nilaiBobotArray = [];
+        $symptomDetails = [];
 
         $sumsByNamapenyakit = [];
-        foreach ($nilaiBobotArray as $result) {
-            $namapenyakit = $result['namapenyakit'];
-            $bobot = $result['nilaibobot'];
 
-            // If this namapenyakit is not in the sums array yet, initialize it with 0
-            if (!isset($sumsByNamapenyakit[$namapenyakit])) {
-                $sumsByNamapenyakit[$namapenyakit] = 0;
+        foreach ($selectedSymptoms as $data) {
+            $result = $model->getSymptomDetailsByID($data);
+
+            if ($result) {
+                $nilaiBobotArray[] = $result;
+                $namapenyakit = $result[0]['namapenyakit'];
+                $bobot = $result[0]['nilaibobot'];
+
+                if (!isset($symptomDetails[$namapenyakit])) {
+                    $symptomDetails[$namapenyakit] = [];
+                }
+
+                $symptomDetails[$namapenyakit][] = [
+                    'gejala' => $result[0]['gejala'],
+                    'bobot' => $bobot,
+                ];
+
+                if (!isset($sumsByNamapenyakit[$namapenyakit])) {
+                    $sumsByNamapenyakit[$namapenyakit] = 0;
+                }
+
+                $sumsByNamapenyakit[$namapenyakit] += ($bobot * $bobot);
             }
-
-            // Add the bobot to the sum for this namapenyakit
-            $sumsByNamapenyakit[$namapenyakit] += $bobot;
         }
 
-        // Calculate the total sum of all penyakits
-        $totalSum = array_sum($sumsByNamapenyakit);
-
-        // Calculate percentages and store them in a new array
-        $percentages = [];
-        foreach ($sumsByNamapenyakit as $namapenyakit => $sum) {
-            // Calculate the percentage for this penyakit
-            $percentage = ($sum / $totalSum) * 100;
-            // Format the percentage with two decimal places
-            $formattedPercentage = number_format($percentage, 2);
-            $percentages[$namapenyakit] = $formattedPercentage . '%';
-        }
-
-        return $percentages;
+        return [
+            'percentages' => $sumsByNamapenyakit,
+            'symptomDetails' => $symptomDetails,
+        ];
     }
 }
