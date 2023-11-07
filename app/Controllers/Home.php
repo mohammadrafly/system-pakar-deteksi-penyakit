@@ -87,7 +87,7 @@ class Home extends BaseController
                     $sumsByNamapenyakit[$namapenyakit] = 0;
                 }
 
-                $sumsByNamapenyakit[$namapenyakit] += ($bobot * $bobot);
+                $sumsByNamapenyakit[$namapenyakit] += $bobot;
             }
         }
 
