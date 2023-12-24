@@ -58,7 +58,12 @@
     <div class="diseases-probability">
         <h2 class="text-3xl font-semibold mb-6">Diseases Probability</h2>
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
-            <?php foreach ($diseasesProbability['percentages'] as $disease => $probability): ?>
+        <?php
+            // Find the maximum probability in the array
+            $maxProbability = max($diseasesProbability['percentages']);
+        ?>
+
+        <?php foreach ($diseasesProbability['percentages'] as $disease => $probability): ?>
             <div class="mb-4">
                 <div class="bg-white rounded-lg shadow-lg">
                     <a href="<?= base_url('daftar-penyakit/detail/' . $disease) ?>" class="block h-48 overflow-hidden rounded-t-lg">
@@ -67,20 +72,26 @@
                         <h5 class="text-xl font-semibold mb-2">
                             <a href="<?= base_url('daftar-penyakit/detail/' . $disease) ?>" class="text-blue-500 hover:underline"><?= $disease ?></a>
                         </h5>
-                        <p class="text-gray-700"><strong>Probabilitas:</strong> <?= $probability ?></p>
+                        <p class="text-gray-700">
+                            <strong>Probabilitas:</strong>
+                            <span style="color: <?= $probability === $maxProbability ? 'green' : 'red' ?>; font-weight: <?= $probability === $maxProbability ? 'bold' : 'bold' ?>">
+                                <?= $probability ?>
+                            </span>
+                        </p>
                         <h6 class="text-sm font-medium mt-4 mb-2">Detail Gejala</h6>
                         <ul class="list-disc pl-4">
                             <?php foreach ($diseasesProbability['symptomDetails'][$disease] as $detail): ?>
-                            <li class="mb-2">
-                                <strong>Gejala:</strong> <?= $detail['gejala'] ?><br>
-                                <strong>Bobot:</strong> <?= $detail['bobot'] ?>
-                            </li>
+                                <li class="mb-2">
+                                    <strong>Gejala:</strong> <?= $detail['gejala'] ?><br>
+                                    <strong>Bobot:</strong> <?= $detail['bobot'] ?>
+                                </li>
                             <?php endforeach; ?>
                         </ul>
                     </div>
                 </div>
             </div>
-            <?php endforeach; ?>
+        <?php endforeach; ?>
+
         </div>
     </div>
     <?php endif; ?>

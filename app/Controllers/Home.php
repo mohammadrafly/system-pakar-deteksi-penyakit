@@ -51,6 +51,7 @@ class Home extends BaseController
         $diseasesProbability = $this->calculateEuclideanProbability($selectedSymptoms);
     
         return view('Pages/diagnosaPenyakit', [
+        //dd([
             'title' => 'Diagnosa Penyakit',
             'content' => $model->findAll(),
             'diseasesProbability' => $diseasesProbability,

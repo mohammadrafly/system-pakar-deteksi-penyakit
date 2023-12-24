@@ -23,8 +23,8 @@
         <a href="<?= base_url('admin/basis-pengetahuan') ?>" class="text-sm font-semibold leading-6 text-gray-900">Data Basis Pengetahuan</a>
     <?php else: ?>
         <a href="<?= base_url('/') ?>" class="text-sm font-semibold leading-6 text-gray-900">Beranda</a>
-        <a href="<?= base_url('diagnosa-penyakit') ?>" class="text-sm font-semibold leading-6 text-gray-900">Diagnosa Penyakit</a>
-        <a href="<?= base_url('daftar-penyakit') ?>" class="text-sm font-semibold leading-6 text-gray-900">Daftar Penyakit</a>
+        <a href="<?= base_url('diagnosa-penyakit') ?>" class="text-sm font-semibold leading-6 text-gray-900">Diagnosa Penyakit & Hama</a>
+        <a href="<?= base_url('daftar-penyakit') ?>" class="text-sm font-semibold leading-6 text-gray-900">Daftar Penyakit & Hama</a>
         <a href="<?= base_url('about') ?>" class="text-sm font-semibold leading-6 text-gray-900">About</a>
     <?php endif ?>
     </div>

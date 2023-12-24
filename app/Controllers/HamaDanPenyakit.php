@@ -33,6 +33,7 @@ class HamaDanPenyakit extends BaseController
         
         if ($this->request->getMethod(true) !== 'POST') {
             return view('Pages/hamaDanPenyakit', [
+            //dd([
                 'title' => 'Data Gejala',
                 'content' => $model->findAllAssociated(),
                 'jenis' => $tanaman->findAll(),
