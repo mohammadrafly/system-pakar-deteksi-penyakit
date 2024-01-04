@@ -14,6 +14,18 @@
             </button>
         </div>
     <?php endif; ?>
+    <div class="mb-4">
+        <div class="w-8 h8 bg-"></div>
+        <p class="text-red-500">Merah: Paling Tinggi</p>
+    </div>
+
+    <div class="mb-4">
+        <p class="text-blue-500">Biru: Menengah</p>
+    </div>
+
+    <div class="mb-4">
+        <p class="text-green-500">Hijau: Rendah</p>
+    </div>
     <form method="POST" action="<?= base_url('diagnosa-penyakit') ?>">
         <?php
         $groupedData = [];
@@ -55,45 +67,55 @@
         </button>
     </form>
     <?php if (!is_null($diseasesProbability)): ?>
-    <div class="diseases-probability">
-        <h2 class="text-3xl font-semibold mb-6">Diseases Probability</h2>
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
-        <?php
-            // Find the maximum probability in the array
-            $maxProbability = max($diseasesProbability['percentages']);
-        ?>
+        <div class="diseases-probability">
+            <h2 class="text-3xl font-semibold mb-6">Diseases Probability</h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+            <?php
+                $maxProbability = max($diseasesProbability['percentages']);
+                $minProbability = min($diseasesProbability['percentages']);
+            ?>
 
-        <?php foreach ($diseasesProbability['percentages'] as $disease => $probability): ?>
-            <div class="mb-4">
-                <div class="bg-white rounded-lg shadow-lg">
-                    <a href="<?= base_url('daftar-penyakit/detail/' . $disease) ?>" class="block h-48 overflow-hidden rounded-t-lg">
-                    </a>
-                    <div class="p-6">
-                        <h5 class="text-xl font-semibold mb-2">
-                            <a href="<?= base_url('daftar-penyakit/detail/' . $disease) ?>" class="text-blue-500 hover:underline"><?= $disease ?></a>
-                        </h5>
-                        <p class="text-gray-700">
-                            <strong>Probabilitas:</strong>
-                            <span style="color: <?= $probability === $maxProbability ? 'green' : 'red' ?>; font-weight: <?= $probability === $maxProbability ? 'bold' : 'bold' ?>">
-                                <?= $probability ?>
-                            </span>
-                        </p>
-                        <h6 class="text-sm font-medium mt-4 mb-2">Detail Gejala</h6>
-                        <ul class="list-disc pl-4">
-                            <?php foreach ($diseasesProbability['symptomDetails'][$disease] as $detail): ?>
-                                <li class="mb-2">
-                                    <strong>Gejala:</strong> <?= $detail['gejala'] ?><br>
-                                    <strong>Bobot:</strong> <?= $detail['bobot'] ?>
-                                </li>
-                            <?php endforeach; ?>
-                        </ul>
+            <?php foreach ($diseasesProbability['percentages'] as $disease => $probability): ?>
+                <div class="mb-4">
+                    <div class="bg-white rounded-lg shadow-lg">
+                        <a href="<?= base_url('daftar-penyakit/detail/' . $disease) ?>" class="block h-48 overflow-hidden rounded-t-lg">
+                        </a>
+                        <div class="p-6">
+                            <h5 class="text-xl font-semibold mb-2">
+                                <a href="<?= base_url('daftar-penyakit/detail/' . $disease) ?>" class="text-blue-500 hover:underline"><?= $disease ?></a>
+                            </h5>
+                            <p class="text-gray-700">
+                                <strong>Probabilitas:</strong>
+                                <span style="color: 
+                                    <?php
+                                    if ($probability === $maxProbability) {
+                                        echo 'red';
+                                    } elseif ($probability === $minProbability) {
+                                        echo 'green';
+                                    } else {
+                                        echo 'blue';
+                                    }
+                                    ?>;
+                                    font-weight: <?= $probability === $maxProbability ? 'bold' : 'normal' ?>">
+                                    <?= $probability ?>
+                                </span>
+                            </p>
+                            <h6 class="text-sm font-medium mt-4 mb-2">Detail Gejala</h6>
+                            <ul class="list-disc pl-4">
+                                <?php foreach ($diseasesProbability['symptomDetails'][$disease] as $detail): ?>
+                                    <li class="mb-2">
+                                        <strong>Gejala:</strong> <?= $detail['gejala'] ?><br>
+                                        <strong>Bobot:</strong> <?= $detail['bobot'] ?>
+                                    </li>
+                                <?php endforeach; ?>
+                            </ul>
+                        </div>
                     </div>
                 </div>
-            </div>
-        <?php endforeach; ?>
+            <?php endforeach; ?>
 
+            </div>
         </div>
-    </div>
     <?php endif; ?>
 </div>
 
